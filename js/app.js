@@ -35,6 +35,14 @@ function formatDate(date = new Date()) {
 
 function byId(id) { return document.getElementById(id); }
 function productById(id) { return state.products.find((p) => p.id === id); }
+function escapeHTML(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
 
 function showMessage(msg) { alert(msg); }
 
@@ -63,12 +71,16 @@ function activateSection(sectionId) {
 function populateProductSelects() {
   ['movementProduct', 'saleProduct', 'countProduct'].forEach((selectId) => {
     const select = byId(selectId);
-    select.innerHTML = state.products.map((p) => `<option value="${p.id}">${p.name} (${p.stock})</option>`).join('');
+    select.innerHTML = state.products.map((p) => `
+      <option value="${escapeHTML(p.id)}">${escapeHTML(p.name)} (${p.stock})</option>
+    `).join('');
   });
 }
 
 function populateClientSelect() {
-  byId('saleClient').innerHTML = state.clients.map((c) => `<option value="${c.id}">${c.name}</option>`).join('');
+  byId('saleClient').innerHTML = state.clients.map((c) => `
+    <option value="${escapeHTML(c.id)}">${escapeHTML(c.name)}</option>
+  `).join('');
 }
 
 function renderDashboard() {
@@ -83,10 +95,10 @@ function renderDashboard() {
   byId('recentMovementsBody').innerHTML = state.movements.slice(-8).reverse().map((m) => `
     <tr>
       <td>${formatDate(m.date)}</td>
-      <td>${m.type}</td>
-      <td>${m.productName}</td>
+      <td>${escapeHTML(m.type)}</td>
+      <td>${escapeHTML(m.productName)}</td>
       <td>${m.qty}</td>
-      <td>${m.user}</td>
+      <td>${escapeHTML(m.user)}</td>
     </tr>
   `).join('') || '<tr><td colspan="5">No movements yet.</td></tr>';
 }
@@ -94,11 +106,14 @@ function renderDashboard() {
 function renderProducts() {
   byId('productsBody').innerHTML = state.products.map((p) => `
     <tr>
-      <td>${p.name}</td><td>${p.sku}</td><td>${p.category}</td>
+      <td>${escapeHTML(p.name)}</td><td>${escapeHTML(p.sku)}</td><td>${escapeHTML(p.category)}</td>
       <td>$${p.price.toFixed(2)}</td><td>${p.stock}</td>
-      <td><button class="action-btn" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pen"></i></button></td>
+      <td><button class="action-btn edit-product-btn" data-product-id="${escapeHTML(p.id)}"><i class="fa-solid fa-pen"></i></button></td>
     </tr>
   `).join('');
+  document.querySelectorAll('.edit-product-btn').forEach((button) => {
+    button.addEventListener('click', () => editProduct(button.dataset.productId));
+  });
 }
 
 window.editProduct = function editProduct(id) {
@@ -114,31 +129,31 @@ window.editProduct = function editProduct(id) {
 
 function renderMovements() {
   byId('movementsBody').innerHTML = state.movements.slice().reverse().map((m) => `
-    <tr><td>${formatDate(m.date)}</td><td>${m.type}</td><td>${m.productName}</td><td>${m.qty}</td><td>${m.note || '-'}</td><td>${m.user}</td></tr>
+    <tr><td>${formatDate(m.date)}</td><td>${escapeHTML(m.type)}</td><td>${escapeHTML(m.productName)}</td><td>${m.qty}</td><td>${escapeHTML(m.note || '-')}</td><td>${escapeHTML(m.user)}</td></tr>
   `).join('') || '<tr><td colspan="6">No movement records.</td></tr>';
 }
 
 function renderSales() {
   byId('salesBody').innerHTML = state.sales.slice().reverse().map((s) => `
-    <tr><td>${formatDate(s.date)}</td><td>${s.clientName}</td><td>${s.productName}</td><td>${s.qty}</td><td>$${s.total.toFixed(2)}</td><td>${s.user}</td></tr>
+    <tr><td>${formatDate(s.date)}</td><td>${escapeHTML(s.clientName)}</td><td>${escapeHTML(s.productName)}</td><td>${s.qty}</td><td>$${s.total.toFixed(2)}</td><td>${escapeHTML(s.user)}</td></tr>
   `).join('') || '<tr><td colspan="6">No sales registered.</td></tr>';
 }
 
 function renderCounts() {
   byId('countBody').innerHTML = state.counts.slice().reverse().map((c) => `
-    <tr><td>${formatDate(c.date)}</td><td>${c.productName}</td><td>${c.oldStock}</td><td>${c.counted}</td><td>${c.diff > 0 ? '+' : ''}${c.diff}</td><td>${c.user}</td></tr>
+    <tr><td>${formatDate(c.date)}</td><td>${escapeHTML(c.productName)}</td><td>${c.oldStock}</td><td>${c.counted}</td><td>${c.diff > 0 ? '+' : ''}${c.diff}</td><td>${escapeHTML(c.user)}</td></tr>
   `).join('') || '<tr><td colspan="6">No count adjustments yet.</td></tr>';
 }
 
 function renderUsers() {
   byId('usersBody').innerHTML = state.users.map((u) => `
-    <tr><td>${u.name}</td><td>${u.username}</td><td>${u.role}</td></tr>
+    <tr><td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.username)}</td><td>${escapeHTML(u.role)}</td></tr>
   `).join('');
 }
 
 function renderClients() {
   byId('clientsBody').innerHTML = state.clients.map((c) => `
-    <tr><td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td></tr>
+    <tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.email)}</td><td>${escapeHTML(c.phone)}</td></tr>
   `).join('');
 }
 
