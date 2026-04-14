@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electrofull Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-layout" id="appRoot">
+      <aside class="sidebar" aria-label="Primary">
+        <h1 class="brand">Electrofull</h1>
+        <nav>
+          <ul class="menu" id="sidebarMenu">
+            <li><button class="menu-item active" data-section="dashboard">Dashboard</button></li>
+            <li><button class="menu-item" data-section="products">Products</button></li>
+            <li><button class="menu-item" data-section="inventory">Inventory</button></li>
+            <li><button class="menu-item" data-section="sales">Sales</button></li>
+            <li><button class="menu-item" data-section="users">Users</button></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="content" id="content" tabindex="-1">
+        <header class="page-header">
+          <h2 id="sectionTitle">Dashboard</h2>
+          <p id="sectionSubtitle">Quick view of your business performance.</p>
+        </header>
+
+        <section class="section active" id="dashboard" data-name="Dashboard">
+          <div class="grid cards-3">
+            <article class="card metric">
+              <h3>Total Revenue</h3>
+              <p class="value">$42,180</p>
+              <p class="meta">+12% from last month</p>
+            </article>
+            <article class="card metric">
+              <h3>Orders Today</h3>
+              <p class="value">128</p>
+              <p class="meta">18 pending fulfillment</p>
+            </article>
+            <article class="card metric">
+              <h3>Active Users</h3>
+              <p class="value">1,384</p>
+              <p class="meta">96 online now</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="products" data-name="Products">
+          <div class="grid cards-2">
+            <article class="card">
+              <h3>Top Products</h3>
+              <ul>
+                <li>Wireless Earbuds</li>
+                <li>Smartwatch X2</li>
+                <li>USB-C Dock Station</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Catalog Status</h3>
+              <p>322 listed products</p>
+              <p>17 drafts pending review</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="inventory" data-name="Inventory">
+          <div class="grid cards-2">
+            <article class="card">
+              <h3>Low Stock Alerts</h3>
+              <ul>
+                <li>Gaming Mouse Pro — 4 left</li>
+                <li>Portable SSD 1TB — 7 left</li>
+                <li>Bluetooth Speaker Mini — 3 left</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Warehouse Overview</h3>
+              <p>In stock: 12,844 units</p>
+              <p>Reserved: 1,113 units</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="sales" data-name="Sales">
+          <div class="grid cards-2">
+            <article class="card">
+              <h3>Sales This Week</h3>
+              <p class="value">$18,602</p>
+              <p class="meta">Best day: Tuesday</p>
+            </article>
+            <article class="card">
+              <h3>Channel Performance</h3>
+              <ul>
+                <li>Website: 63%</li>
+                <li>Marketplace: 28%</li>
+                <li>Retail: 9%</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="users" data-name="Users">
+          <div class="grid cards-2">
+            <article class="card">
+              <h3>New Signups</h3>
+              <p>42 in the last 24 hours</p>
+              <p>312 in the last 7 days</p>
+            </article>
+            <article class="card">
+              <h3>Support Tickets</h3>
+              <p>Open: 14</p>
+              <p>Resolved today: 21</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
